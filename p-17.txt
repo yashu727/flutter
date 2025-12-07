@@ -1,0 +1,47 @@
+import 'package:flutter/material.dart';
+
+class RotatingClock extends StatefulWidget {
+  const RotatingClock({super.key});
+
+  @override
+  State<RotatingClock> createState() => _RotatingClockState();
+}
+
+class _RotatingClockState extends State<RotatingClock>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  bool isClockwise = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+      lowerBound: 0,
+      upperBound: 1,
+    );
+  }
+
+  void rotateImage() {
+    if (isClockwise) {
+      _controller.forward(from: 0);
+    } else {
+      _controller.reverse(from: 1);
+    }
+    setState(() {
+      isClockwise = !isClockwise; // toggle direction
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Rotating
