@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: ProductScreen(),
+    );
+  }
+}
+
+class ProductScreen extends StatelessWidget {
+  final CollectionReference products =
+      FirebaseFirestore.instance.collection('products');
+
+  ProductScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Firestore Products")),
+      body: StreamBuilder<QuerySnapshot>(
+        stream: products.snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return const Center(child: Text("No products found"));
+          }
+
+          final items = snapshot.data!.docs;
+
+          return ListView.builder(
+            scrollDirection: Axis.horizontal,     // L→R scroll
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final data = items[index].data() as Map<String, dynamic>;
