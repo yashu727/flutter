@@ -1,0 +1,60 @@
+import 'package:flutter/material.dart';
+
+class DateRangeScreen extends StatefulWidget {
+  const DateRangeScreen({super.key});
+
+  @override
+  State<DateRangeScreen> createState() => _DateRangeScreenState();
+}
+
+class _DateRangeScreenState extends State<DateRangeScreen> {
+  DateTime? startDate;
+  DateTime? endDate;
+
+  void pickStartDate() async {
+    DateTime? selectedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+
+    if (selectedDate != null) {
+      setState(() {
+        startDate = selectedDate;
+        endDate = selectedDate.subtract(const Duration(days: 29));
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Date Picker Logic")),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: pickStartDate,
+              child: const Text("Select Start Date"),
+            ),
+            const SizedBox(height: 20),
+
+            if (startDate != null)
+              Text(
+                "Start Date: ${startDate?.toLocal().toString().split(' ')[0]}",
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+
+            if (endDate != null)
+              Text(
+                "End Date: ${endDate?.toLocal().toString().split(' ')[0]}",
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
