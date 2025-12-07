@@ -1,16 +1,44 @@
 import 'package:flutter/material.dart';
 
-class MoveWidgetScreen extends StatefulWidget {
-  const MoveWidgetScreen({super.key});
-
+class MoveWidgetDemo extends StatefulWidget {
   @override
-  State<MoveWidgetScreen> createState() => _MoveWidgetScreenState();
+  _MoveWidgetDemoState createState() => _MoveWidgetDemoState();
 }
 
-class _MoveWidgetScreenState extends State<MoveWidgetScreen> {
-  Alignment alignment = Alignment.topLeft;
+class _MoveWidgetDemoState extends State<MoveWidgetDemo> {
+  // Alignment variable that changes on button press
+  Alignment _alignment = Alignment.topLeft;
 
-  void moveWidget() {
-    setState(() {
-      alignment = alignment == Alignment.topLeft
-          ? Alignment.bo
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Move Widget Example")),
+      body: Stack(
+        children: [
+          // AnimatedAlign will animate the movement
+          AnimatedAlign(
+            alignment: _alignment,
+            duration: Duration(seconds: 1), // animation speed
+            curve: Curves.easeInOut,
+            child: Container(
+              width: 80,
+              height: 80,
+              color: Colors.blue,  // you can replace this with Image.asset(...)
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.play_arrow),
+        onPressed: () {
+          setState(() {
+            // Toggle between corners
+            _alignment = _alignment == Alignment.topLeft
+                ? Alignment.bottomRight
+                : Alignment.topLeft;
+          });
+        },
+      ),
+    );
+  }
+}
