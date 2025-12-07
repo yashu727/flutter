@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'dart:async';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: TimerGifScreen());
+  }
+}
+
+class TimerGifScreen extends StatefulWidget {
+  @override
+  _TimerGifScreenState createState() => _TimerGifScreenState();
+}
+
+class _TimerGifScreenState extends State<TimerGifScreen> {
+  int _seconds = 0;
+  String _displayText = "";
+  bool _showGif = true;
+  Timer? _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        _seconds++;
+        if (_seconds > 15) {
+          _showGif = false;
+          _displayText = "Running time has been over!";
+          _timer?.cancel();
+        }
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Timer GIF Example")),
+      body: Center(
+        child: _showGif
+            ? Image.asset("assets/running.gif") // replace with your GIF
+            : Text(
+                _displayText,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+}
