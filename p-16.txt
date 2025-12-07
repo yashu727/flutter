@@ -1,0 +1,22 @@
+import 'package:flutter/material.dart';
+
+class DrawingApp extends StatefulWidget {
+  const DrawingApp({super.key});
+
+  @override
+  State<DrawingApp> createState() => _DrawingAppState();
+}
+
+class _DrawingAppState extends State<DrawingApp> {
+  List<Offset?> points = [];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Simple Drawing App")),
+      body: GestureDetector(
+        onPanUpdate: (details) {
+          setState(() {
+            RenderBox? box = context.findRenderObject() as RenderBox?;
+            if (box != null) {
+              po
