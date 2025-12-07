@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+
+class MyLayout extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Full background
+          Container(
+            color: Colors.green,
+          ),
+
+          // First box (large red/orange box)
+          Positioned(
+            top: 150,
+            left: 50,
+            child: Container(
+              height: 250,
+              width: 250,
+              color: Colors.orange,
+            ),
+          ),
+
+          // Second box (small violet box)
+          Positioned(
+            top: 80,
+            left: 50,
+            child: Container(
+              height: 130,
+              width: 180,
+              color: Colors.purple,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
