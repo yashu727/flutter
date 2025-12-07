@@ -1,0 +1,16 @@
+import 'package:flutter/material.dart';
+
+class MoveWidgetScreen extends StatefulWidget {
+  const MoveWidgetScreen({super.key});
+
+  @override
+  State<MoveWidgetScreen> createState() => _MoveWidgetScreenState();
+}
+
+class _MoveWidgetScreenState extends State<MoveWidgetScreen> {
+  Alignment alignment = Alignment.topLeft;
+
+  void moveWidget() {
+    setState(() {
+      alignment = alignment == Alignment.topLeft
+          ? Alignment.bo
