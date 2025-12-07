@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+// Step 1: Create a provider class
+class FormDataProvider with ChangeNotifier {
+  String firstName = '';
+  String lastName = '';
+
+  void updateData(String fName, String lName) {
+    firstName = fName;
+    lastName = lName;
+    notifyListeners();
+  }
+}
+
+// Step 2: Main app
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => FormDataProvider(),
+      child: const MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Form with Provider',
+      home: const FormScreen(),
+    );
+  }
+}
+
+// Step 3: Form Screen
+class FormScreen extends StatefulWidget {
+  const FormScreen({super.key});
+
+  @overr
