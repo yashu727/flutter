@@ -1,0 +1,10 @@
+int count = 0;
+
+FloatingActionButton(
+  onPressed: () {
+    setState(() {
+      count = count + 10;
+    });
+  },
+  child: Icon(Icons.add),
+);
