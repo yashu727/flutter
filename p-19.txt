@@ -1,44 +1,53 @@
-import 'package:flutter/material.dart';
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
 
-class MoveWidgetDemo extends StatefulWidget {
-  @override
-  _MoveWidgetDemoState createState() => _MoveWidgetDemoState();
-}
+    <Button
+        android:id="@+id/btnA"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Image" />
 
-class _MoveWidgetDemoState extends State<MoveWidgetDemo> {
-  // Alignment variable that changes on button press
-  Alignment _alignment = Alignment.topLeft;
+    <Button
+        android:id="@+id/btnB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Details" />
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Move Widget Example")),
-      body: Stack(
-        children: [
-          // AnimatedAlign will animate the movement
-          AnimatedAlign(
-            alignment: _alignment,
-            duration: Duration(seconds: 1), // animation speed
-            curve: Curves.easeInOut,
-            child: Container(
-              width: 80,
-              height: 80,
-              color: Colors.blue,  // you can replace this with Image.asset(...)
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.play_arrow),
-        onPressed: () {
-          setState(() {
-            // Toggle between corners
-            _alignment = _alignment == Alignment.topLeft
-                ? Alignment.bottomRight
-                : Alignment.topLeft;
-          });
-        },
-      ),
-    );
-  }
-}
+    <!-- Image Area -->
+    <ImageView
+        android:id="@+id/myImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:visibility="gone"
+        android:src="@drawable/my_photo" />
+
+    <!-- Text Area -->
+    <LinearLayout
+        android:id="@+id/detailsLayout"
+        android:orientation="vertical"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtName"
+            android:text="Name: John Doe"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/txtPhone"
+            android:text="Phone: 9876543210"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/txtEmail"
+            android:text="Email: john@example.com"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
+</LinearLayout>
+
+
