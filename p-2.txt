@@ -1,0 +1,7 @@
+SingleChildScrollView(
+  child: Column(
+    children: [
+      // form fields and other widgets
+    ],
+  ),
+)
