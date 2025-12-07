@@ -1,0 +1,49 @@
+import 'package:flutter/material.dart';
+
+class SimpleTextFieldScreen extends StatefulWidget {
+  const SimpleTextFieldScreen({super.key});
+
+  @override
+  State<SimpleTextFieldScreen> createState() => _SimpleTextFieldScreenState();
+}
+
+class _SimpleTextFieldScreenState extends State<SimpleTextFieldScreen> {
+  final _formKey = GlobalKey<FormState>();
+  String userInput = "";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Simple TextFormField")),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: "Enter some text",
+                  border: OutlineInputBorder(),
+                ),
+                onSaved: (value) {
+                  userInput = value ?? "";
+                },
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  _formKey.currentState!.save();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("You entered: $userInput")),
+                  );
+                },
+                child: const Text("Save Input"),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
