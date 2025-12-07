@@ -1,0 +1,12 @@
+Container(
+  padding: EdgeInsets.all(10),
+  decoration: BoxDecoration(
+    border: Border.all(color: Colors.black),
+    borderRadius: BorderRadius.circular(8),
+    color: Colors.white,
+  ),
+  child: Text(
+    "Your Text Here",
+    style: TextStyle(fontSize: 16),
+  ),
+)
