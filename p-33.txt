@@ -1,0 +1,111 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+// Provider class to manage list of strings
+class StringListProvider with ChangeNotifier {
+  List<String> items = [];
+
+  void addItem(String item) {
+    items.add(item);
+    notifyListeners();
+  }
+}
+
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => StringListProvider(),
+      child: const MyApp(),
+    ),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Provider List Example',
+      home: const StringListScreen(),
+    );
+  }
+}
+
+class StringListScreen extends StatefulWidget {
+  const StringListScreen({super.key});
+
+  @override
+  State<StringListScreen> createState() => _StringListScreenState();
+}
+
+class _StringListScreenState extends State<StringListScreen> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Provider List Example")),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            // Input and add button
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    decoration: const InputDecoration(
+                      labelText: "Enter a string",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    final text = _controller.text.trim();
+                    if (text.isNotEmpty) {
+                      Provider.of<StringListProvider>(context, listen: false)
+                          .addItem(text);
+                      _controller.clear();
+                    }
+                  },
+                  child: const Text("Add"),
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            // Display the list
+            const Expanded(child: StringListDisplayWidget()),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Widget to display the list from provider
+class StringListDisplayWidget extends StatelessWidget {
+  const StringListDisplayWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final stringList = Provider.of<StringListProvider>(context).items;
+
+    if (stringList.isEmpty) {
+      return const Center(child: Text("No items added yet."));
+    }
+
+    return ListView.builder(
+      itemCount: stringList.length,
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: const Icon(Icons.label),
+          title: Text(stringList[index]),
+        );
+      },
+    );
+  }
+}
