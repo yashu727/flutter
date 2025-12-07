@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+
+class HoverAnimatedText extends StatefulWidget {
+  const HoverAnimatedText({super.key});
+
+  @override
+  State<HoverAnimatedText> createState() => _HoverAnimatedTextState();
+}
+
+class _HoverAnimatedTextState extends State<HoverAnimatedText> {
+  bool isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Hover Animated Text")),
+      body: Center(
+        child: MouseRegion(
+          onEnter: (_) => setState(() => isHovered = true),
+          onExit: (_) => setState(() => isHovered = false),
+          child: AnimatedDefaultTextStyle(
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+            style: TextStyle(
+              fontSize: isHovered ? 40 : 28,
+              color: isHovered ? Colors.blue : Colors.black,
+              fontWeight: isHovered ? FontWeight.bold : FontWeight.normal,
+            ),
+            child: const Text("Hover Over Me"),
+          ),
+        ),
+      ),
+    );
+  }
+}
