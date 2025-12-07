@@ -1,0 +1,40 @@
+import 'package:flutter/material.dart';
+
+class ImageSlideAnimation extends StatefulWidget {
+  const ImageSlideAnimation({super.key});
+
+  @override
+  State<ImageSlideAnimation> createState() => _ImageSlideAnimationState();
+}
+
+class _ImageSlideAnimationState extends State<ImageSlideAnimation>
+    with SingleTickerProviderStateMixin {
+
+  late AnimationController _controller;
+  late Animation<Offset> _slideAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(-1, 0), // start from left side
+      end: Offset.zero,           // end at normal position
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
+
+    _controller.forward(); // start animation automatically
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContex
